@@ -1,0 +1,241 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+    .modal-backdrop {
+        opacity: 0.5 !important;
+    }
+
+    .rwd-table-in {
+        background: #fff;
+        overflow: hidden;
+    }
+
+        .rwd-table-in th,
+        .rwd-table-in td {
+            margin: 0.5em 1em;
+        }
+
+    .rwd-table-in {
+        min-width: 100%;
+    }
+
+        .rwd-table-in th {
+            display: none;
+        }
+
+        .rwd-table-in td {
+            display: block;
+        }
+
+            .rwd-table-in td:before {
+                content: attr(data-th) " : ";
+                font-weight: bold;
+                width: 6.5em;
+                display: inline-block;
+            }
+
+        .rwd-table-in th, .rwd-table-in td {
+            text-align: left;
+        }
+
+            .rwd-table-in th, .rwd-table-in td:before {
+                color: #007bff;
+                font-weight: bold;
+            }
+
+
+
+    .rwd-table {
+        background: #fff;
+        overflow: hidden;
+    }
+
+        .rwd-table tr:nth-of-type(2n) {
+            background: #eee;
+        }
+
+        .rwd-table th,
+        .rwd-table td {
+            margin: 0.5em 1em;
+        }
+
+    .rwd-table {
+        min-width: 100%;
+    }
+
+        .rwd-table th {
+            display: none;
+        }
+
+        .rwd-table td {
+            display: block;
+        }
+
+            .rwd-table td:before {
+                content: attr(data-th) " : ";
+                font-weight: bold;
+                width: 6.5em;
+                display: inline-block;
+            }
+
+        .rwd-table th, .rwd-table td {
+            text-align: left;
+        }
+
+            .rwd-table th, .rwd-table td:before {
+                color: #D20B2A;
+                font-weight: bold;
+            }
+
+    @@media (min-width: 480px) {
+        .rwd-table td:before {
+            display: none;
+        }
+
+        .rwd-table th, .rwd-table td {
+            display: table-cell;
+            padding: 0.25em 0.5em;
+        }
+
+            .rwd-table th:first-child,
+            .rwd-table td:first-child {
+                padding-left: 0;
+            }
+
+            .rwd-table th:last-child,
+            .rwd-table td:last-child {
+                padding-right: 0;
+            }
+
+        .rwd-table th,
+        .rwd-table td {
+            padding: 1em !important;
+        }
+
+        .rwd-table-in td:before {
+            display: none;
+        }
+
+        .rwd-table-in th, .rwd-table-in td {
+            display: table-cell;
+            padding: 0.25em 0.5em;
+        }
+
+            .rwd-table-in th:first-child,
+            .rwd-table-in td:first-child {
+                padding-left: 0;
+            }
+
+            .rwd-table-in th:last-child,
+            .rwd-table-in td:last-child {
+                padding-right: 0;
+            }
+
+        .rwd-table-in th,
+        .rwd-table-in td {
+            padding: 1em !important;
+        }
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">
+                        <i class="nav-icon fas fa-people-carry"></i>
+                        @ViewBag.Title
+                    </h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+    <div id="v_app"></div>
+</div>
+
+<template id="OrderManagement">
+    <div class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <table class="rwd-table" v-if="ListItem">
+                            <tr class="bg-info">
+                                <th class="text-nowrap"></th>
+                                <th class="text-nowrap">OrderId</th>
+                                <th class="text-nowrap">OrderItem</th>
+                                <th class="text-nowrap">Price</th>
+                                <th class="text-nowrap">Cost</th>
+                                <th class="text-nowrap">Status</th>
+                            </tr>
+                            <tr v-for="(Item, index) in ListItem">
+                                <td data-th="">
+                                    <input type="checkbox" v-on:change="ConfirmItem(Item.OrderId)" :disabled="CheckStatus(Item.Status)" />
+                                </td>
+                                <td data-th="OrderId">
+                                    {{Item.OrderId}}
+                                </td>
+                                <td data-th="OrderItem">
+                                    <button class="btn btn-outline-success" v-on:click.prevent="ShowOrderDetail(Item.OrderId)">ShowOrderItem</button>
+                                </td>
+                                <td data-th="Price">
+                                    {{Item.Price}}
+                                </td>
+                                <td data-th="Cost">
+                                    {{Item.Cost}}
+                                </td>
+                                <td data-th="Status">
+                                    {{Item.Status | GetOrderStatus}}
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                    <div class="mt-2">
+                        <button class="btn btn-primary" v-on:click.prevent="ConfirmOrder">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <b-modal id="OrderDetail" title="OrderDetail">
+            <table class="rwd-table" v-if="DetailListItem">
+                <tr>
+                    <th class="text-nowrap">ProductId</th>
+                    <th class="text-nowrap">Name</th>
+                    <th class="text-nowrap">Price</th>
+                    <th class="text-nowrap">Cost</th>
+                </tr>
+                <tr v-for="(Item, index) in DetailListItem">
+                    <td data-th="ProductId">
+                        {{Item.ProductId}}
+                    </td>
+                    <td data-th="Name">
+                        {{Item.Name}}
+                    </td>
+                    <td data-th="Price">
+                        {{Item.Price}}
+                    </td>
+                    <td data-th="Cost">
+                        {{Item.Cost}}
+                    </td>
+                </tr>
+            </table>
+        </b-modal>
+    </div>
+</template>
+
+@section Scripts {
+    <script></script>
+    <script>
+        requirejs.config({
+            baseUrl: "@Url.Content("~/Scripts/build/view/Order")"
+        });
+        require(["index"]);
+    </script>
+}

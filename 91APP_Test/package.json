@@ -1,0 +1,20 @@
+{
+  "name": "91app_test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jquery": "^3.3.38",
+    "bootstrap-vue": "^2.15.0",
+    "requirejs": "^2.3.6",
+    "typescript": "^3.9.3",
+    "vue": "^2.6.11",
+    "vue-property-decorator": "^8.4.2"
+  },
+  "devDependencies": {},
+  "description": ""
+}

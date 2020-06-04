@@ -1,0 +1,6 @@
+D:\91APP_Test\91APP_ViewModel\bin\Debug\91APP_ViewModel.dll.config
+D:\91APP_Test\91APP_ViewModel\bin\Debug\91APP_ViewModel.dll
+D:\91APP_Test\91APP_ViewModel\bin\Debug\91APP_ViewModel.pdb
+D:\91APP_Test\91APP_ViewModel\obj\Debug\91APP_ViewModel.csprojAssemblyReference.cache
+D:\91APP_Test\91APP_ViewModel\obj\Debug\91APP_ViewModel.dll
+D:\91APP_Test\91APP_ViewModel\obj\Debug\91APP_ViewModel.pdb
